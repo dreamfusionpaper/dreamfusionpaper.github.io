@@ -1,1 +1,298 @@
-DreamFusion
+<!DOCTYPE html>
+<html>
+
+<head>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-XB3PR2Y1TQ"></script>
+    <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XB3PR2Y1TQ');
+    </script>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <title>DreamFusion: Text-to-3D using 2D Diffusion</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/css/bootstrap.min.css">
+    <link href='https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,500,600' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" href="/assets/css/Highlight-Clean.css">
+    <link rel="stylesheet" href="/assets/css/styles.css">
+
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png">
+    <link rel="manifest" href="/site.webmanifest">
+    <meta name="robots" content="noindex">
+
+    <meta property="og:site_name" content="DreamFusion" />
+    <meta property="og:type" content="video.other" />
+    <meta property="og:title" content="DreamFusion: Text-to-3D using 2D Diffusion" />
+    <meta property="og:description" content="DreamFusion: Text-to-3D using 2D Diffusion, 2022." />
+    <meta property="og:url" content="https://dreamfusionpaper.github.io/" />
+
+    <script src="assets/js/video_comparison.js"></script>
+    <script type="module" src="https://unpkg.com/@google/model-viewer@2.0.1/dist/model-viewer.min.js"></script>
+</head>
+
+<body>
+    <div class="banner">
+      <video class="video lazy"
+          poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/sept28/banner_1x6_customhue_A.jpg"
+          autoplay loop playsinline muted>
+        <source data-src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/sept28/banner_1x6_customhue_A.mp4" type="video/mp4"></source>
+      </video>
+    </div>
+    <div class="highlight-clean" style="padding-bottom: 10px;">
+        <div class="container" style="max-width: 768px;">
+            <h1 class="text-center"><b>DreamFusion</b>: Text-to-3D using 2D Diffusion</h1>
+        </div>
+        <div class="container" style="max-width: 768px;">
+            <div class="row authors">
+                <div class="col-sm-12">
+                    <h5 class="text-center" style="text-align: center">Authors anonymized</h5>
+                </div>
+            </div>    
+        </div>
+    </div>
+    <hr class="divider" />
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Abstract</h2>
+                <p>
+                        Recent breakthroughs in text-to-image synthesis have been driven by diffusion models trained on billions of image-text pairs. Adapting this approach to 3D synthesis would require large-scale datasets of labeled 3D assets and efficient architectures for denoising 3D data, neither of which currently exist. In this work, we circumvent these limitations by using a pretrained 2D text-to-image diffusion model to perform text-to-3D synthesis. We introduce a loss based on probability density distillation that enables the use of a 2D diffusion model as a prior for optimization of a parametric image generator. Using this loss in a DeepDream-like procedure, we optimize a randomly-initialized 3D model (a Neural Radiance Field, or NeRF) via gradient descent such that its 2D renderings from random angles achieve a low loss. The resulting 3D model of the given text can be viewed from any angle, relit by arbitrary illumination, or composited into any 3D environment. Our approach requires no 3D training data and no modifications to the image diffusion model, demonstrating the effectiveness of pretrained image diffusion models as priors.
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="container" style="max-width: 768px;">
+        <div class="row captioned_videos">
+            <div class="col-md-12">
+                <!-- Large format devices -->
+                <video class="video lazy d-none d-xs-none d-sm-block" autoplay loop playsinline muted poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/sept28/wipe_opposite_6x4_smoothstep.jpg">
+                    <source data-src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/sept28/wipe_opposite_6x4_smoothstep.mp4" type="video/mp4"></source>
+                </video>
+                <!-- Small format devices -->
+                <video class="video lazy d-xs-block d-sm-none" autoplay loop playsinline muted poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/sept28/shaded_3x3_smoothstep.jpg">
+                    <source data-src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/sept28/shaded_3x3_smoothstep.mp4" type="video/mp4"></source>
+                </video>
+                <h6 class="caption">Given a caption, DreamFusion generates relightable 3D objects with high-fidelity appearance, depth, and normals. Objects are represented as a Neural Radiance Field and leverage a pretrained text-to-image diffusion prior such as Imagen.</h6>
+            </div>
+        </div>
+    </div>
+    <hr class="divider" />
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Generate 3D from text yourself!</h2>
+            </div>
+        </div>
+        <div class="row compositional captioned_videos">
+            <div class="col-sm-8 text">
+                <p class="selectable left" id="compositional_tags_depth_0"></p>
+            </div>
+            <div class="col-sm-4 my-auto">
+                <div class="video-compare-container">
+                    <video id="compositionalVideo" class="video" autoplay loop playsinline muted>
+                        <div class="screen" id="compositionalScreen"></div>
+                        <source id="compositionalVideoSrc" src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/journey_sept28/cropped/full_continuous/a_DSLR_photo_of_a_squirrel___rgbdn_hq_15000.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="divider" />
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-sm-12">
+                <h2>Example generated objects</h2>
+                <p>DreamFusion generates objects and scenes from diverse captions.</p>
+            </div>
+        </div>
+        <div class="row captioned_videos">
+            <div class="col-4">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex1" loop playsinline autoplay muted onplay="resizeAndPlay(this)" style="height: 0px;">
+                        <source data-src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/gallery/a_teddy_bear_pushing_a_shopping_cart_full_of_fruits_and_vegetables_rgbdn_hq_15000.mp4" type="video/mp4"></source>
+                    </video>
+                    <canvas height="752" class="videoMerge" id="ex1Merge" width="1002"></canvas>
+                </div>
+                <h6 class="caption">A teddy bear pushing a shopping cart full of fruits and vegetables.</h6>
+            </div>
+            <div class="col-4">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex2" loop playsinline autoplay muted onplay="resizeAndPlay(this)" style="height: 0px;">
+                        <source data-src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/gallery/a_sliced_loaf_of_fresh_bread_rgbdn_hq_15000.mp4" type="video/mp4"></source>
+                    </video>
+                    <canvas height="752" class="videoMerge" id="ex2Merge" width="1002"></canvas>
+                </div>
+                <h6 class="caption">a sliced loaf of fresh bread.</h6>
+            </div>
+            <div class="col-4">
+                <div class="video-compare-container" style="width: 100%">
+                    <video class="video lazy" id="ex3" loop playsinline autoplay muted onplay="resizeAndPlay(this)" style="height: 0px;">
+                        <source data-src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/gallery/a_zoomed_out_DSLR_photo_of_Sydney_opera_house,_aerial_view_rgbdn_hq_15000.mp4" type="video/mp4"></source>
+                    </video>
+                    <canvas height="752" class="videoMerge" id="ex3Merge" width="1002"></canvas>
+                </div>
+                <h6 class="caption">a zoomed out DSLR photo of Sydney opera house, aerial view.</h6>
+            </div>
+        </div>
+    </div>
+    <hr class="divider" />
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Composing objects into a scene</h2>
+                <video class="video lazy" autoplay loop playsinline controls muted poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/carouselx24_128tall.jpg">
+                    <source src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/carouselx24_128tall.mp4" type="video/mp4"></source>
+                </video>
+            </div>
+        </div>
+    </div>
+    <hr class="divider" />
+    <div class="container meshes" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Mesh exports</h2>
+                <p>Our generated NeRF models can be exported to meshes using an algorithm based on marching cubes for easy integration into 3D renderers or modeling software.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 my-auto">
+                <model-viewer alt="Sweater Frog"
+                    src="/assets/meshes/sweaterfrog_1step.glb"
+                    poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/meshes/sept28/sweaterfrog_1step.jpg"
+                    environment-image="https://modelviewer.dev/shared-assets/environments/whipple_creek_regional_park_04_1k.hdr"
+                    shadow-intensity="1" exposure="0.3" camera-controls touch-action="pan-y" ar
+                    loading="lazy" reveal="manual" id="mesh1"
+                    crossorigin="anonymous" style="height: 300px; width: 100%;">
+                </model-viewer>
+                <div class="controls">
+                    <button class="btn btn-primary loads-model" data-controls="mesh1">Load 3D model</button>
+                    <p class="caption" title="a DSLR photo of a frog wearing a sweater">[...] a frog wearing a sweater</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 my-auto" style="position: relative">
+                <model-viewer alt="Scorpion" src="/assets/meshes/scorpion_1step.glb"
+                    poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/meshes/sept28/scorpion_1step.jpg"
+                    environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr"
+                    shadow-intensity="1" exposure=".5" camera-controls touch-action="pan-y" ar
+                    loading="lazy" reveal="manual" id="mesh2"
+                    crossorigin="anonymous" style="height: 300px; width: 100%;">
+                </model-viewer>
+                <div class="controls">
+                    <button class="btn btn-primary loads-model" data-controls="mesh2">Load 3D model</button>
+                    <p class="caption" title="an iridescent metal scorpion">an iridescent metal scorpion</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 my-auto">
+                <model-viewer alt="Packard car"
+                    src="/assets/meshes/packardcar_1step.glb"
+                    poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/meshes/sept28/packardcar_1step.jpg"
+                    environment-image="https://modelviewer.dev/shared-assets/environments/whipple_creek_regional_park_04_1k.hdr"
+                    shadow-intensity="1" exposure="0.3" camera-controls touch-action="pan-y" ar
+                    loading="lazy" reveal="manual" id="mesh3"
+                    crossorigin="anonymous" style="height: 300px; width: 100%;">
+                </model-viewer>
+                <div class="controls">
+                    <button class="btn btn-primary loads-model" data-controls="mesh3">Load 3D model</button>
+                    <p class="caption" title="a DSLR photo of a classic Packard car">[...] a classic Packard car</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 my-auto" style="position: relative">
+                <model-viewer alt="Sydney Opera House"
+                    src="/assets/meshes/sydney_1step.glb"
+                    poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/meshes/sept28/sydney_1step.jpg"
+                    environment-image="https://modelviewer.dev/shared-assets/environments/moon_1k.hdr"
+                    shadow-intensity="1" exposure="0.6" camera-controls touch-action="pan-y" ar
+                    loading="lazy" reveal="manual" id="mesh4"
+                    crossorigin="anonymous" style="height: 300px; width: 100%;">
+                </model-viewer>
+                <div class="controls">
+                    <button class="btn btn-primary loads-model" data-controls="mesh4">Load 3D model</button>
+                    <p class="caption" title="a DSLR photo of [...] Sydney opera house, aerial view">[...] Sydney opera house, aerial view</p>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-6 col-sm-6 my-auto">
+                <model-viewer alt="Croissant"
+                    src="/assets/meshes/croissant_1step.glb"
+                    poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/meshes/sept28/croissant_1step.jpg"
+                    environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr"
+                    shadow-intensity="1" exposure="0.6" camera-controls touch-action="pan-y" ar
+                    loading="lazy" reveal="manual" id="mesh5"
+                    crossorigin="anonymous" style="height: 300px; width: 100%;">
+                </model-viewer>
+                <div class="controls">
+                    <button class="btn btn-primary loads-model" data-controls="mesh5">Load 3D model</button>
+                    <p class="caption" title="a DSLR photo of [...] a delicious croissant">[...] a delicious croissant</p>
+                </div>
+            </div>
+            <div class="col-md-6 col-sm-6 my-auto" style="position: relative">
+                <model-viewer alt="A robot holds a human brain" src="/assets/meshes/robotholdsbrain_1step.glb"
+                    poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/meshes/sept28/robotholdsbrain_1step.jpg"
+                    environment-image="https://modelviewer.dev/shared-assets/environments/spruit_sunrise_1k_HDR.hdr"
+                    shadow-intensity="1" exposure="0.5" camera-controls touch-action="pan-y" ar
+                    loading="lazy" reveal="manual" id="mesh6"
+                    crossorigin="anonymous" style="height: 300px; width: 100%;">
+                </model-viewer>
+                <div class="controls">
+                    <button class="btn btn-primary loads-model" data-controls="mesh6">Load 3D model</button>
+                    <p class="caption" title="a DSLR photo of a humanoid robot holding a human brain">[...] a humanoid robot holding a human brain</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    <hr class="divider" />
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>How does DreamFusion work?</h2>
+                <p>Given a caption, DreamFusion uses a text-to-image generative model called <a href="imagen.research.google">Imagen</a> to optimize a 3D scene. We propose <strong>Score Distillation Sampling (SDS)</strong>, a way to generate samples from a diffusion model by optimizing a loss function. SDS allows us to optimize samples in an arbitrary parameter space, such as a 3D space, as long as we can map back to images differentiably. We use a 3D scene parameterization similar to Neural Radiance Fields, or NeRFs, to define this differentiable mapping. SDS alone produces reasonable scene appearance, but DreamFusion adds additional regularizers and optimization strategies to improve geometry. The resulting trained NeRFs are coherent, with high-quality normals, surface geometry and depth, and are relightable with a Lambertian shading model.</p>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12">
+                <video class="video lazy" controls muted poster="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/dreamfusion_overview.jpg">
+                    <source data-src="https://pub-b1f092b6867f4495b8f149d222a3bffe.r2.dev/dreamfusion_overview.mp4" type="video/mp4"></source>
+                </video>
+            </div>
+        </div>
+    </div>
+    <hr class="divider" />
+    <div class="container" style="max-width: 768px;">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Citation</h2>
+                <p>Anonymous. DreamFusion: Text-to-3D using 2D Diffusion. OpenReview, 2022.<br></p><code>
+                    @article{anon2022dreamfusion,<br>
+                    &nbsp; author = {Anonymous},<br>
+                    &nbsp; title  = {DreamFusion: Text-to-3D using 2D Diffusion},<br>
+                    &nbsp; joural = {OpenReview},<br>
+                    &nbsp; year   = {2022},<br>
+                }</code></div>
+        </div>
+    </div>
+    <script src="https://polyfill.io/v3/polyfill.js?features=IntersectionObserver"></script>
+    <script src="/assets/js/yall.js"></script>
+    <script>
+        yall(
+            {
+                observeChanges: true
+            }
+        );
+    </script>
+    <script src="/assets/js/scripts.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.5.0/js/bootstrap.bundle.min.js"></script>
+    <script src="https://uploads-ssl.webflow.com/51e0d73d83d06baa7a00000f/js/webflow.fd002feec.js"></script>
+    <!-- Import the component -->
+</body>
+
+</html>
